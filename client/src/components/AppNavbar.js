@@ -21,7 +21,7 @@ class AppNavbar extends Component {
   };
 
   componentDidMount() {
-    this.props.loadUser();
+    if (this.props.auth.token) this.props.loadUser();
   }
   static propTypes = {
     auth: PropTypes.object.isRequired,

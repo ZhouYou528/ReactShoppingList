@@ -1,4 +1,10 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from './types';
+import {
+  GET_ITEMS,
+  ADD_ITEM,
+  DELETE_ITEM,
+  ITEMS_LOADING,
+  ITEM_ADDED
+} from './types';
 import axios from 'axios';
 import { tokenConfig } from './authAction';
 import { returnErrors } from './errorAction';
@@ -49,5 +55,11 @@ export const deleteItem = id => (dispatch, getState) => {
 export const setItemsLoading = () => {
   return {
     type: ITEMS_LOADING
+  };
+};
+
+export const setAdded = () => {
+  return {
+    type: ITEM_ADDED
   };
 };

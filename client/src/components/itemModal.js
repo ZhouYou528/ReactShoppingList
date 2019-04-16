@@ -11,15 +11,11 @@ import {
   Alert
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { addItem } from '../actions/itemActions';
+import { addItem, setAdded } from '../actions/itemActions';
 import { clearErrors } from '../actions/errorAction';
 import PropTypes from 'prop-types';
 
 class ItemModal extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.onSubmit = this.onSubmit.bind(this);
-  //   }
   state = {
     modal: false,
     name: '',
@@ -29,6 +25,7 @@ class ItemModal extends Component {
   static propTypes = {
     error: PropTypes.object.isRequired,
     addItem: PropTypes.func.isRequired,
+    setAdded: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired
   };
 
@@ -42,13 +39,14 @@ class ItemModal extends Component {
         this.setState({ msg: null });
       }
     }
-    if (this.state.added && this.props.modal) {
-      console.log('123');
-      if (!error.msg.hasOwnProperty('msg')) this.toggle();
+    //close modal
+    if (this.state.modal) {
+      if (this.props.item.added) this.toggle();
     }
   }
   toggle = () => {
     this.props.clearErrors();
+    if (this.state.modal) this.props.setAdded();
     this.setState({
       modal: !this.state.modal
     });
@@ -58,7 +56,7 @@ class ItemModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = async e => {
+  onSubmit = e => {
     e.preventDefault();
     const newItem = {
       name: this.state.name
@@ -112,5 +110,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addItem, clearErrors }
+  { addItem, clearErrors, setAdded }
 )(ItemModal);
