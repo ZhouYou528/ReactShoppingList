@@ -4,12 +4,10 @@ import './App.css';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
-import AppNavbar from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/itemModal';
-import { Container } from 'reactstrap';
 import { loadUser } from './actions/authAction';
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Welcome from './components/Welcome';
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser);
@@ -18,13 +16,12 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <AppNavbar />
-          <Container>
-            <ItemModal />
-            <ShoppingList />
-          </Container>
-        </div>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={Welcome} />
+            <Route path="/home" component={Home} />
+          </Switch>
+        </BrowserRouter>
       </Provider>
     );
   }
